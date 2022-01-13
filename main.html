@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Yeseva+One&display=swap" rel="stylesheet">
+    <title>SF JS Awesome Slider</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font: 32px Nunito Sans;
+            color: white;
+            background-color: black;
+        }
+        
+        .seattle {
+            max-width: 1200px;
+            max-height: 640px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .big-four {
+            margin: 0 auto;
+            position: relative;
+            display: none;
+        }
+        
+        .text {
+            position: absolute;
+            right: 25px;
+            bottom: 20px;
+        }
+        
+        .prev,
+        .next {
+            position: absolute;
+            padding: 20px;
+            top: 40%;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        .next {
+            right: 0px;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .prev:hover,
+        .next:hover {
+            background-color: rgb(29, 27, 27);
+            opacity: 0.5;
+            transition: background-color 0.4s ease;
+        }
+        
+        .arrow {
+            color: white;
+            width: 26px;
+        }
+        
+        .arrow:hover {
+            cursor: pointer;
+        }
+        
+        .dots {
+            width: 150px;
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            position: relative;
+            margin: auto;
+        }
+        
+        .dot {
+            width: 20px;
+            margin-top: 20px;
+            height: 20px;
+            border-radius: 100%;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+        
+        .active,
+        .dot:hover {
+            background-color: gray;
+        }
+        
+        .big-four img {
+            max-height: 640px;
+        }
+        
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+        
+        @keyframes fade {
+            from {
+                opacity: .2
+            }
+            to {
+                opacity: 1
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="seattle">
+
+        <div class="big-four fade">
+            <img src="Images/alice-in-chains.jpg" class="band" alt="Alice in Chains" width=100% max-height="640px">
+            <div class="text">Alice in Chains</div>
+        </div>
+        <div class="big-four fade">
+            <img src="Images/pj.jpg" class="band" alt="Pearl Jam" width=100% max-height="640px">
+            <div class="text">Pearl Jam</div>
+        </div>
+        <div class="big-four fade">
+            <img src="Images/nirvana.jpg" class="band" alt="Nirvana" width=100% max-height="640px">
+            <div class="text">Nirvana</div>
+        </div>
+        <div class="big-four fade">
+            <img src="Images/soundgarden.jpg" class="band" alt="Soundgarden" width=100% max-height="640px">
+            <div class="text">Soundgarden</div>
+        </div>
+        <a class="prev" onclick="changeBand(-1)"><img class="arrow" src="Images/left_head.svg"></a>
+        <a class="next" onclick="changeBand(1)"><img class="arrow" src="Images/right_head.svg"></a>
+    </div>
+
+    <div class="dots">
+        <button class="dot" onclick="switchBand(1)"></button>
+        <button class="dot" onclick="switchBand(2)"></button>
+        <button class="dot" onclick="switchBand(3)"></button>
+        <button class="dot" onclick="switchBand(4)"></button>
+
+    </div>
+    <script>
+        let bands = document.querySelectorAll('.big-four');
+        let dots = document.querySelectorAll('.dot');
+        let slider = 1;
+        checkBand(slider);
+
+        function switchBand(n) {
+            checkBand(slider = n)
+        }
+
+        function changeBand(n) {
+            checkBand(slider = slider + n)
+        }
+
+        function checkBand(n) {
+            let i;
+            if (n > bands.length) {
+                slider = 1
+            }
+            if (n < 1) {
+                slider = bands.length
+            }
+            for (i = 0; i < bands.length; i++) {
+                bands[i].style.display = 'none';
+            }
+            for (i = 0; i < bands.length; i++) {
+                dots[i].classList.remove('active')
+            }
+            bands[slider - 1].style.display = 'block';
+            dots[slider - 1].classList.add('active')
+
+        }
+    </script>
+</body>
+
+</html>
