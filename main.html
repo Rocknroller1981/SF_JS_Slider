@@ -20,8 +20,8 @@
         }
         
         .seattle {
-            max-width: 1200px;
-            max-height: 640px;
+            max-width: 1000px;
+            max-height: fit-content;
             margin: 0 auto;
             position: relative;
         }
@@ -41,10 +41,11 @@
         .prev,
         .next {
             position: absolute;
-            padding: 20px;
+            padding: 30px;
             top: 40%;
             border-radius: 0 5px 5px 0;
             cursor: pointer;
+            display: flex;
         }
         
         .next {
@@ -62,6 +63,7 @@
         .arrow {
             color: white;
             width: 26px;
+            align-self: center;
         }
         
         .arrow:hover {
@@ -83,7 +85,7 @@
             margin-top: 20px;
             height: 20px;
             border-radius: 100%;
-            background-color: white;
+            background-color: rgb(53, 53, 53);
             border: none;
             cursor: pointer;
             transition: background-color 0.5s ease;
@@ -91,7 +93,7 @@
         
         .active,
         .dot:hover {
-            background-color: gray;
+            background-color: white;
         }
         
         .big-four img {
@@ -111,6 +113,19 @@
                 opacity: 1
             }
         }
+        
+        @media (max-width: 600px) {
+            .dot {
+                width: 15px;
+                height: 15px;
+            }
+            .arrow {
+                width: 16px;
+            }
+            body {
+                font: 16px Nunito Sans;
+            }
+        }
     </style>
 </head>
 
@@ -118,19 +133,19 @@
     <div class="seattle">
 
         <div class="big-four fade">
-            <img src="Images/alice-in-chains.jpg" class="band" alt="Alice in Chains" width=100% max-height="640px">
+            <img src="Images/alice-in-chains.jpg" class="band" alt="Alice in Chains" width=100% height=100%>
             <div class="text">Alice in Chains</div>
         </div>
         <div class="big-four fade">
-            <img src="Images/pj.jpg" class="band" alt="Pearl Jam" width=100% max-height="640px">
+            <img src="Images/pj.jpg" class="band" alt="Pearl Jam" width=100% height=100%>
             <div class="text">Pearl Jam</div>
         </div>
         <div class="big-four fade">
-            <img src="Images/nirvana.jpg" class="band" alt="Nirvana" width=100% max-height="640px">
+            <img src="Images/nirvana.jpg" class="band" alt="Nirvana" width=100% height=100%>
             <div class="text">Nirvana</div>
         </div>
         <div class="big-four fade">
-            <img src="Images/soundgarden.jpg" class="band" alt="Soundgarden" width=100% max-height="640px">
+            <img src="Images/soundgarden.jpg" class="band" alt="Soundgarden" width=100% height=100%>
             <div class="text">Soundgarden</div>
         </div>
         <a class="prev" onclick="changeBand(-1)"><img class="arrow" src="Images/left_head.svg"></a>
