@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Yeseva+One&display=swap" rel="stylesheet">
+    <title>SF_JS_Britpop_slider</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font: 32px Nunito Sans;
+            color: white;
+            background-color: black;
+        }
+        
+        .britpop {
+            max-width: 900px;
+            max-height: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .bands {
+            width: 900px;
+            height: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .image {
+            margin: 0 auto;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center center;
+            display: none;
+        }
+        
+        .arrows {
+            width: 100%;
+            height: fit-content;
+            position: absolute;
+            top: 40%;
+            display: flex;
+        }
+        
+        .prev,
+        .next {
+            padding: 30px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            display: flex;
+            position: absolute;
+        }
+        
+        .next {
+            right: 0px;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .prev:hover,
+        .next:hover {
+            background-color: rgb(29, 27, 27);
+            opacity: 0.5;
+            transition: background-color 0.4s ease;
+        }
+        
+        .arrow {
+            color: white;
+            width: 26px;
+            align-self: center;
+        }
+        
+        .arrow:hover {
+            cursor: pointer;
+        }
+        
+        .dots {
+            width: 150px;
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            position: relative;
+            margin: auto;
+        }
+        
+        .dot {
+            width: 20px;
+            margin-top: 20px;
+            height: 20px;
+            border-radius: 100%;
+            background-color: rgb(53, 53, 53);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+        
+        .active,
+        .dot:hover {
+            background-color: white;
+        }
+        
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+        
+        .bands .block {
+            display: block;
+        }
+        
+        @keyframes fade {
+            from {
+                opacity: .2
+            }
+            to {
+                opacity: 1
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="britpop">
+        <div class="bands"></div>
+        <div class="arrows">
+            <a class="switch prev"><img class="arrow" src="Images/left_head.svg"></a>
+            <a class="switch next"><img class="arrow" src="Images/right_head.svg"></a>
+        </div>
+    </div>
+
+    <div class="dots"></div>
+
+
+    <script>
+        let images = [{
+            url: 'https://www.rollingstone.com/wp-content/uploads/2018/06/rs-191888-R1233_FOB_Blur_ExMachina_A.jpg',
+            title: "Blur"
+        }, {
+            url: 'https://getwallpapers.com/wallpaper/full/5/f/9/1122572-new-oasis-wallpaper-1920x1080-for-4k.jpg',
+            title: 'Oasis'
+        }, {
+            url: "https://4.bp.blogspot.com/-jV9TACv9wU8/VHqM1DQyc0I/AAAAAAAAG-8/cC3dlku3jg4/s1600/lagu%2Bkasabian%2Bterbaik%2B-%2Bmuseummusik.jpg",
+            title: 'Kasabian'
+        }];
+
+
+        let bandPix = document.querySelector('.bands');
+        let bandArrows = document.querySelector('.arrows');
+        let bandDots = document.querySelector('.dots');
+
+
+        function showBands() {
+            images.forEach((item, index) => {
+                let pix = `<div class = 'image n${index} ${index==0? 'block' : ''} fade' style="background-image: url(${images[index].url});" data-index ="${index}"></div>`;
+                bandPix.innerHTML += pix;
+            })
+            console.log('ok')
+        }
+        showBands()
+    </script>
+</body>
+
+</html>

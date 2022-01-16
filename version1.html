@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Yeseva+One&display=swap" rel="stylesheet">
+    <title>SF JS Awesome Slider</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font: 32px Nunito Sans;
+            color: white;
+            background-color: black;
+        }
+        
+        .seattle {
+            max-width: 1000px;
+            max-height: fit-content;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .big-four {
+            width: fit-content;
+            margin: 0 auto;
+            position: relative;
+            display: none;
+        }
+        
+        .text {
+            position: absolute;
+            right: 25px;
+            bottom: 20px;
+        }
+        
+        .prev,
+        .next {
+            position: absolute;
+            padding: 30px;
+            top: 40%;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            display: flex;
+        }
+        
+        .next {
+            right: 0px;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .prev:hover,
+        .next:hover {
+            background-color: rgb(29, 27, 27);
+            opacity: 0.5;
+            transition: background-color 0.4s ease;
+        }
+        
+        .arrow {
+            color: white;
+            width: 26px;
+            align-self: center;
+        }
+        
+        .arrow:hover {
+            cursor: pointer;
+        }
+        
+        .dots {
+            margin: 0 auto;
+            max-width: 1000px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dot {
+            display: flex;
+            width: 150px;
+            margin: 20px;
+            height: 50px;
+            border-radius: 5%;
+            /*background-color: rgb(53, 53, 53);*/
+            background: gray;
+            border: 2px solid gray;
+            cursor: pointer;
+            /*transition: background-color 0.5s ease;*/
+            color: white;
+            font: 20px Yeseva One;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .active,
+        .dot:hover {
+            background-color: transparent;
+            transition: background-color 0.5s ease;
+        }
+        
+        .big-four img {
+            max-height: 640px;
+        }
+        
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+            animation-timing-function: linear;
+            animation-direction: reverse;
+        }
+        
+        @keyframes fade {
+            from {
+                left: 0px;
+            }
+            to {
+                left: 1000px;
+            }
+        }
+        
+        .reverse {
+            animation-name: reverse;
+            animation-duration: 1.5s;
+            animation-timing-function: linear;
+            animation-direction: reverse;
+        }
+        
+        @keyframes reverse {
+            from {
+                right: 0px;
+            }
+            to {
+                right: 1000px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .dot {
+                width: 50px;
+                height: 15px;
+                font-size: 10px;
+            }
+            .arrow {
+                width: 16px;
+            }
+            body {
+                font: 16px Nunito Sans;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="seattle">
+
+        <div class="big-four fade reverse">
+            <img src="Images/alice-in-chains.jpg" class="band" alt="Alice in Chains" width=100% height=100%>
+            <div class="text">Alice in Chains</div>
+        </div>
+        <div class="big-four fade reverse">
+            <img src="Images/pj.jpg" class="band" alt="Pearl Jam" width=100% height=100%>
+            <div class="text">Pearl Jam</div>
+        </div>
+        <div class="big-four fade reverse">
+            <img src="Images/nirvana.jpg" class="band" alt="Nirvana" width=100% height=100%>
+            <div class="text">Nirvana</div>
+        </div>
+        <div class="big-four fade reverse>
+            <img src=" Images/soundgarden.jpg " class="band " alt="Soundgarden " width=100% height=100%>
+            <div class="text ">Soundgarden</div>
+        </div>
+        <a class="prev "><img class="arrow " src="Images/left_head.svg "></a>
+        <a class="next "><img class="arrow " src="Images/right_head.svg "></a>
+    </div>
+
+    <div class="dots ">
+        <button class="dot back ">BACK</button>
+        <button class="dot forward ">FORWARD</button>
+    </div>
+    <script>
+        let bands = document.querySelectorAll('.big-four');
+        let dots = document.querySelectorAll('.dot');
+        let left = document.querySelector('.prev');
+        let right = document.querySelector('.next');
+        let back = document.querySelector('.back');
+        let forward = document.querySelector('.forward');
+
+
+        left.addEventListener('click', () => changeLeft(-1));
+        right.addEventListener('click', () => changeRight(1));
+        back.addEventListener('click', () => changeLeft(-1));
+        forward.addEventListener('click', () => changeRight(1))
+
+        let slider = 1;
+        checkBand(slider);
+        checkMusic(slider)
+        function changeRight(n) {
+            checkBand(slider += n)
+        }
+
+        function changeLeft(n){
+            checkMusic(slider += n)
+        }
+
+        function checkBand(n) {
+
+            if (n > bands.length) {
+                slider = 1;
+            }
+            if (n < 1) {
+                slider = bands.length
+            }
+            let i;
+            for (i = 0; i < bands.length; i++) {
+                bands[i].style.display = 'none';
+                
+            }
+            
+            bands[slider - 1].style.display = 'block';
+            bands[slider-1].classList.add('.reverse');
+            bands[skider-1].classList.remove('.fade');
+            
+        }
+        
+        function checkMusic(n) {
+
+if (n > bands.length) {
+      slider = 1;
+}
+if (n < 1) {
+slider = bands.length
+}   
+let i;
+for (i = 0; i < bands.length; i++) {
+bands[i].style.display = 'none';
+}
+
+bands[slider - 1].style.display = 'block';
+bands[slider - 1].classList.add('.fade');
+bands[slider - 1].classList.remove('.reverse')
+
+}
+
+    </script>
+</body>
+
+</html>
