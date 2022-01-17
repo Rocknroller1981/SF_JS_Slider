@@ -14,8 +14,6 @@
         }
         
         body {
-            font: 32px Nunito Sans;
-            color: white;
             background-color: black;
         }
         
@@ -53,6 +51,8 @@
             position: absolute;
             top: 40%;
             display: flex;
+            font: 42px Nunito Sans;
+            color: whitesmoke;
         }
         
         .prev,
@@ -62,6 +62,7 @@
             cursor: pointer;
             display: flex;
             position: absolute;
+            text-align: center;
         }
         
         .next {
@@ -72,18 +73,8 @@
         .prev:hover,
         .next:hover {
             background-color: rgb(29, 27, 27);
-            opacity: 0.5;
+            opacity: 0.7;
             transition: background-color 0.4s ease;
-        }
-        
-        .arrow {
-            color: white;
-            width: 26px;
-            align-self: center;
-        }
-        
-        .arrow:hover {
-            cursor: pointer;
         }
         
         .dots {
@@ -101,7 +92,7 @@
             margin-top: 20px;
             height: 20px;
             border-radius: 100%;
-            background-color: rgb(53, 53, 53);
+            background-color: gray;
             border: none;
             cursor: pointer;
             transition: background-color 0.5s ease;
@@ -114,16 +105,26 @@
         
         .fade {
             animation-name: fade;
-            animation-duration: 1.5s;
+            animation-duration: 2.5s;
         }
         
-        .bands .block {
+        .block {
             display: block;
+        }
+        
+        .title {
+            font: 60px Nunito Sans;
+            color: white;
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+            width: 100%;
+            text-align: right;
         }
         
         @keyframes fade {
             from {
-                opacity: .2
+                opacity: .1
             }
             to {
                 opacity: 1
@@ -136,11 +137,10 @@
     <div class="britpop">
         <div class="bands"></div>
         <div class="arrows">
-            <a class="switch prev"><img class="arrow" src="Images/left_head.svg"></a>
-            <a class="switch next"><img class="arrow" src="Images/right_head.svg"></a>
+            <a class="arrow prev">&#9668;</a>
+            <a class="arrow next">&#9658;</a>
         </div>
     </div>
-
     <div class="dots"></div>
 
 
@@ -154,22 +154,82 @@
         }, {
             url: "https://4.bp.blogspot.com/-jV9TACv9wU8/VHqM1DQyc0I/AAAAAAAAG-8/cC3dlku3jg4/s1600/lagu%2Bkasabian%2Bterbaik%2B-%2Bmuseummusik.jpg",
             title: 'Kasabian'
+        }, {
+            url: 'https://media.timeout.com/images/103441005/image.jpg',
+            title: "Suede"
         }];
-
 
         let bandPix = document.querySelector('.bands');
         let bandArrows = document.querySelector('.arrows');
         let bandDots = document.querySelector('.dots');
+        let arrows = document.querySelectorAll('.arrow');
 
 
         function showBands() {
+
             images.forEach((item, index) => {
-                let pix = `<div class = 'image n${index} ${index==0? 'block' : ''} fade' style="background-image: url(${images[index].url});" data-index ="${index}"></div>`;
+                let pix = `<div class="image n${index} fade ${index === 0? "block" : ""}" style="background-image:url(${images[index].url});" data-index="${index}"></div>`;
                 bandPix.innerHTML += pix;
+
             })
-            console.log('ok')
+
         }
         showBands()
+
+        function showTitle() {
+            images.forEach((item, index) => {
+                let bandName = `<div class = "title fade">${images[index].title}</div>`
+                if (index == 0) {
+                    bandPix.innerHTML += bandName;
+                }
+            })
+        }
+        showTitle()
+
+
+        function showDots() {
+            images.forEach((item, index) => {
+                let dot = `<div class="dot n${index} ${index==0? "active" : ""}" data-index = "${index}"</div>`;
+                bandDots.innerHTML += dot
+            })
+            bandDots.querySelectorAll('.dot').forEach((item) => item.addEventListener('click', function() {
+                changeBand(this.dataset.index)
+            }))
+        }
+
+        showDots()
+
+        function clickArrows() {
+            arrows.forEach((item) => {
+                item.addEventListener('click', function() {
+                    let currentPic = +bandPix.querySelector('.block').dataset.index;
+                    let nextPic;
+                    if (item.classList.contains('prev')) {
+                        nextPic = currentPic === 0 ? images.length - 1 : currentPic - 1
+                    } else {
+                        nextPic = currentPic === images.length - 1 ? 0 : currentPic + 1
+                    }
+                    changeBand(nextPic)
+                })
+            })
+
+        }
+
+        clickArrows()
+
+        function changeBand(number) {
+            bandPix.querySelector('.block').classList.remove('block')
+            bandPix.querySelector('.n' + number).classList.add('block')
+            bandDots.querySelector('.active').classList.remove('active')
+            bandDots.querySelector('.n' + number).classList.add('active')
+            changeTitle(number)
+        }
+
+        function changeTitle(number) {
+
+            let sliderTitle = bandPix.querySelector(".title");
+            sliderTitle.textContent = images[number].title;
+        }
     </script>
 </body>
 
